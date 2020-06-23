@@ -15,9 +15,9 @@ This project contains an Authentication server.
 ### Setup
 
 #### `.env` requirements
-<!-- PORT=<port> (will default to 3000 if you don't specify here)
+PORT=<port> (will default to 3000 if you don't specify here)
 
-MONGODB_ATLAS_URI=mongodb+srv://dbAdmin:<password>@cluster0-2u75g.mongodb.net/<database>?retryWrites=true&w=majority -->
+MONGODB_ATLAS_URI=mongodb+srv://dbAdmin:<password>@cluster0-2u75g.mongodb.net/<database>?retryWrites=true&w=majority
 
 #### Packages to Install
 <!-- (see package.json)

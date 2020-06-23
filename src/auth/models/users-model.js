@@ -11,6 +11,9 @@
 const schema = require('./users-schema.js');
 const Model = require('./mongo-interface.js');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+let SECRET = 'secretvalidationstring';
 
 class User extends Model {
   
@@ -27,8 +30,11 @@ class User extends Model {
     //code goes here
   }
 
-  generateToken(){
-    //code goes here
+  static generateToken(username){
+    let token = jwt.sign({username}, SECRET);
+    return token;
+    
+    //Notes:
     //generate token based off of username:password
   }
 

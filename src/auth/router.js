@@ -26,8 +26,8 @@
       return;
     }
     let password = await UserModel.hashPassword(request.body.password);
-    console.log(password);
     User.create({ username: request.body.username, password: password});
+    console.log(UserModel.generateToken({ username: request.body.username}));
     response.send('user was signed up');
 
    //Notes: 

@@ -40,6 +40,10 @@ class MongoInterface {
   delete(_id) {
     return this.schema.findByIdAndDelete(_id);
   }
+
+  exists(data){
+    return this.schema.exists(data);
+  }
 }
 
 

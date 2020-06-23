@@ -11,7 +11,6 @@
  const express = require('express');
  const router = express.Router();
  const UserModel = require('./models/users-model.js');
- const usersSchema = require('./models/users-schema.js');
  const User = new UserModel();
 
  router.post('/signup', signupFunction);
@@ -20,19 +19,26 @@
 
 
  async function signupFunction(request, response){
-    // request.body.password = await User.hashPassword(request.body.password);
+    
+    let userExists = await User.exists({ username: request.body.username});
+    if (userExists){
+      response.send('user already exists');
+      return;
+    }
     let password = await UserModel.hashPassword(request.body.password);
-    console.log(password);
     User.create({ username: request.body.username, password: password});
+    console.log(UserModel.generateToken({ username: request.body.username}));
     response.send('user was signed up');
 
-
+   //Notes: 
   // requires a token and user to sign them up
   // req.token, req.user, res.set, res.cookie, res.send
  }
 
  function signInFunction(request, response){
     response.send('user was signed in');
+
+   // Notes: 
   // res.cookie, res.send
   
  }

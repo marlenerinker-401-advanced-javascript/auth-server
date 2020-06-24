@@ -23,11 +23,11 @@ class User extends Model {
   }
 
 
-  static hashPassword(password){
+  static hashPassword(password) {
     return bcrypt.hash(password, 5);
   }
 
-  static async authenticateUser(username, password){
+  static async authenticateUser(username, password) {
     try{
       let user = await schema.find({username});
       let authorized = await bcrypt.compare(password, user[0].password);
@@ -42,10 +42,22 @@ class User extends Model {
     }
   }
 
-  static generateToken(username){
+  static generateToken(username) {
     let token = jwt.sign(username, SECRET);
     return token;
     
+  }
+
+  static async validateToken(token) {
+    try {
+      
+      let user = await jwt.verify(token, SECRET);
+      return user;
+
+    } catch (error) {
+
+      return false;
+    }
   }
 
 }

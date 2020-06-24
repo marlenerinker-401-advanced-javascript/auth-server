@@ -10,15 +10,17 @@
 
  const express = require('express');
  const router = express.Router();
+ const auth = require('./middleware/basic.js');
  const UserModel = require('./models/users-model.js');
  const User = new UserModel();
 
- router.post('/signup', signupFunction);
- router.post('/signin', signInFunction);
+ router.post('/signup', signUp);
+ router.post('/signin', auth, signIn);
  router.get('/users', getUsers);
 
 
- async function signupFunction(request, response){
+
+ async function signUp(request, response){
     
     let userExists = await User.exists({ username: request.body.username});
     if (userExists){
@@ -26,20 +28,26 @@
       return;
     }
     let password = await UserModel.hashPassword(request.body.password);
-    User.create({ username: request.body.username, password: password});
-    console.log(UserModel.generateToken({ username: request.body.username}));
-    response.send('user was signed up');
-
-   //Notes: 
-  // requires a token and user to sign them up
-  // req.token, req.user, res.set, res.cookie, res.send
+    let newUser = await User.create({ username: request.body.username, password: password});
+    if (newUser){
+      let token = UserModel.generateToken({ username: request.body.username});
+      response.cookie('token', token);
+      response.header('token', token);
+      response.send(token);
+    }else {
+      response.status(403).send('invalid user');
+    }
  }
 
- function signInFunction(request, response){
-    response.send('user was signed in');
-
-   // Notes: 
-  // res.cookie, res.send
+ async function signIn(request, response){
+  if (request.user) {
+    let token = await UserModel.generateToken({ username: request.user.username});
+    response.cookie('token', token);
+    response.header('token', token);
+    response.send({token, user: request.user});
+  } else {
+    res.status(403).send('Invalid');
+  }
   
  }
 

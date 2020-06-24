@@ -13,7 +13,8 @@ const Model = require('./mongo-interface.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-let SECRET = 'secretvalidationstring';
+// let SECRET = 'secretvalidationstring';
+let SECRET = process.env.SECRET;
 
 class User extends Model {
   
@@ -26,16 +27,25 @@ class User extends Model {
     return bcrypt.hash(password, 5);
   }
 
-  authenticateUser(password){
-    //code goes here
+  static async authenticateUser(username, password){
+    try{
+      let user = await schema.find({username});
+      let authorized = await bcrypt.compare(password, user[0].password);
+      if (authorized){
+      return user[0];
+      } else {
+        return false;
+      }
+    }catch (error){
+      console.error('ERROR :: ', error)
+      return false;
+    }
   }
 
   static generateToken(username){
-    let token = jwt.sign({username}, SECRET);
+    let token = jwt.sign(username, SECRET);
     return token;
     
-    //Notes:
-    //generate token based off of username:password
   }
 
 }

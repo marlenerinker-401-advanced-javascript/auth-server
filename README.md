@@ -5,7 +5,7 @@ This project contains an Authentication server.
 
 ### Author: Marlene Rinker
 
-- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/auth-server/pull/2)
+- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/auth-server/pull/3)
 <!-- - [Tests Report](https://github.com/marlenerinker-401-advanced-javascript/api-server/actions) -->
 <!-- - [Swagger Hub](https://app.swaggerhub.com/apis/marlene-rinker/api-server/0.1#/) -->
 <!-- - [Heroku deployment](https://app-server-mr401.herokuapp.com/) -->
@@ -18,6 +18,8 @@ This project contains an Authentication server.
 PORT=<port> (will default to 3000 if you don't specify here)
 
 MONGODB_ATLAS_URI=mongodb+srv://dbAdmin:<password>@cluster0-2u75g.mongodb.net/<database>?retryWrites=true&w=majority
+
+SECRET = <secret-string>
 
 #### Packages to Install
 <!-- (see package.json)

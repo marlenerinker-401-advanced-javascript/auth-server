@@ -15,6 +15,7 @@ const jwt = require('jsonwebtoken');
 
 // let SECRET = 'secretvalidationstring';
 let SECRET = process.env.SECRET;
+let EXPIRES = process.env.TOKEN_EXPIRATION;
 
 class User extends Model {
   
@@ -43,14 +44,14 @@ class User extends Model {
   }
 
   static generateToken(username) {
-    let token = jwt.sign(username, SECRET);
+    let token = jwt.sign(username, SECRET, {expiresIn: EXPIRES});
     return token;
     
   }
 
   static async validateToken(token) {
     try {
-      
+
       let user = await jwt.verify(token, SECRET);
       return user;
 

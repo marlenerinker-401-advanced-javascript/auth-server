@@ -1,5 +1,20 @@
 'use strict';
 
+// This module is used to authenticate the user when they try to go to a route to do something in the app.
+/**
+ * bearer authorization
+ * @module bearer
+ */
+
+ /**
+  * bearer authenticates the user
+  * @param request
+  * @param response
+  * @param next
+  * @function bearer
+  * @returns {object}
+  */
+
 const UserModel = require('../models/users-model.js')
 
 async function bearer(request, response, next){

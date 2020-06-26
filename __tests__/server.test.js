@@ -104,3 +104,265 @@ describe('testing secret', () => {
   });
 })
 });
+
+
+
+describe('testing user role', () => {
+
+
+  it('should be able to read', (done) => {
+
+    let user = { username: "user", password: "testing", role: "user" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.get('/read').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /read worked');
+      done();
+    })
+  });
+
+  it('should not be able to add', (done) => {
+
+    let user = { username: "user2", password: "testing", role: "user" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.post('/add').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+  it('should not be able to update', (done) => {
+
+    let user = { username: "user3", password: "testing", role: "user" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.put('/change').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+  it('should not be able to delete', (done) => {
+
+    let user = { username: "user4", password: "testing", role: "user" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.delete('/remove').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+});
+
+describe('testing writer role', () => {
+
+
+  it('should be able to read', (done) => {
+
+    let user = { username: "writer1", password: "testing", role: "writer" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.get('/read').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /read worked');
+      done();
+    })
+  });
+
+  it('should be able to add', (done) => {
+
+    let user = { username: "writer2", password: "testing", role: "writer" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.post('/add').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /add worked');
+      done();
+    })
+  });
+
+  it('should not be able to update', (done) => {
+
+    let user = { username: "writer3", password: "testing", role: "writer" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.put('/change').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+  it('should not be able to delete', (done) => {
+
+    let user = { username: "writer4", password: "testing", role: "writer" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.delete('/remove').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+});
+
+describe('testing editor role', () => {
+
+
+  it('should be able to read', (done) => {
+
+    let user = { username: "editor1", password: "testing", role: "editor" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.get('/read').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /read worked');
+      done();
+    })
+  });
+
+  it('should be able to add', (done) => {
+
+    let user = { username: "editor2", password: "testing", role: "editor" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.post('/add').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /add worked');
+      done();
+    })
+  });
+
+  it('should be able to update', (done) => {
+
+    let user = { username: "editor3", password: "testing", role: "editor" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.put('/change').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /change worked');
+      done();
+    })
+  });
+
+  it('should not be able to delete', (done) => {
+
+    let user = { username: "editor4", password: "testing", role: "editor" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.delete('/remove').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toContain('Access Denied');
+      done();
+    })
+  });
+
+});
+
+describe('testing admin role', () => {
+
+
+  it('should be able to read', (done) => {
+
+    let user = { username: "admin1", password: "testing", role: "admin" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.get('/read').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /read worked');
+      done();
+    })
+  });
+
+  it('should be able to add', (done) => {
+
+    let user = { username: "admin2", password: "testing", role: "admin" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.post('/add').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /add worked');
+      done();
+    })
+  });
+
+  it('should be able to update', (done) => {
+
+    let user = { username: "admin3", password: "testing", role: "admin" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.put('/change').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /change worked');
+      done();
+    })
+  });
+
+  it('should be able to delete', (done) => {
+
+    let user = { username: "admin4", password: "testing", role: "admin" }
+    return mockRequest.post('/signup')
+    .send(user)
+    .then(results => {
+      let token = results.headers.token;
+      return mockRequest.delete('/remove').set('Authorization', `bearer ${token}`);
+    })
+    .then(results => {
+      expect(results.text).toEqual('Route /remove worked');
+      done();
+    })
+  });
+
+});

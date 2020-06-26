@@ -1,5 +1,20 @@
 'use strict';
 
+// This module is used to authenticate the user when they sign in to the app.
+/**
+ * basic authorization
+ * @module basicAuth
+ */
+
+ /**
+  * basicAuth authenticates the user
+  * @param request
+  * @param response
+  * @param next
+  * @function basicAuth
+  * @returns {object}
+  */
+
 const base64 = require('base-64');
 
 const UserModel = require('../models/users-model.js')

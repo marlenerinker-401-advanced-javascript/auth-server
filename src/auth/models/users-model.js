@@ -68,13 +68,16 @@ class User extends Model {
     }
   }
 
-  // async makeUser(data){
-  //   let newUser = new this.schema(data);
-  //   return newUser;
-  // }
+  //used to add info to a user without saving it to the database (for authorization)
+  async makeTempUser(data){
+    this.username = data.username;
+    this.password = data.password;
+    this.role = data.role;
+    return this;
+  }
 
-  async verifyPermissions(capability, user){
-    if (roles[user.role].includes(capability)){
+  async verifyPermissions(capability){
+    if (roles[this.role].includes(capability)){
       console.log('returning true');
       return true;
     }

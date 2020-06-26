@@ -20,10 +20,11 @@ const UserModel = require('../models/users-model.js');
 const User = new UserModel();
 
 const permissions = (capability) => async(request, response, next) => {
-  let user = await User.getByName(request.user.username);
-  // let user = await User.makeUser({username: userInfo.username, role: userInfo.role});
-  // console.log(user);
-  let hasPermission = await User.verifyPermissions(capability, user);
+  let userInfo = await User.getByName(request.user.username);
+  let user = User;
+  user.makeTempUser(userInfo);
+  console.log(user);
+  let hasPermission = await user.verifyPermissions(capability);
   if (hasPermission) {
       next();
   } else {

@@ -5,8 +5,8 @@ This project contains an Authentication server.
 
 ### Author: Marlene Rinker
 
-- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/auth-server/pull/4)
-<!-- - [Tests Report](https://github.com/marlenerinker-401-advanced-javascript/api-server/actions) -->
+- [Submission PR](https://github.com/marlenerinker-401-advanced-javascript/auth-server/pull/5)
+- [Tests Report](https://github.com/marlenerinker-401-advanced-javascript/auth-server/actions)
 <!-- - [Swagger Hub](https://app.swaggerhub.com/apis/marlene-rinker/api-server/0.1#/) -->
 <!-- - [Heroku deployment](https://app-server-mr401.herokuapp.com/) -->
 

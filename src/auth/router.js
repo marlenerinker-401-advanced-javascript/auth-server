@@ -18,7 +18,13 @@
  router.post('/signin', auth, signIn);
  router.get('/users', getUsers);
 
-
+/**
+ * signUp - adds a user 
+ * @function signUp
+ * @param {*} request 
+ * @param {*} response 
+ * @returns {token}
+ */
 
  async function signUp(request, response){
     
@@ -28,7 +34,7 @@
       return;
     }
     let password = await UserModel.hashPassword(request.body.password);
-    let newUser = await User.create({ username: request.body.username, password: password});
+    let newUser = await User.create({ username: request.body.username, password: password, role: request.body.role});
     if (newUser){
       let token = UserModel.generateToken({ username: request.body.username});
       response.cookie('token', token);
@@ -39,6 +45,14 @@
     }
  }
 
+ /**
+ * signIn - signs a user into the app 
+ * @function signIn
+ * @param {*} request 
+ * @param {*} response 
+ * @returns {token, user}
+ */
+
  async function signIn(request, response){
   if (request.user) {
     let token = await UserModel.generateToken({ username: request.user.username});
@@ -48,8 +62,15 @@
   } else {
     res.status(403).send('Invalid');
   }
-  
  }
+
+ /**
+ * getUsers - gets all users that have signed up 
+ * @function getUsers
+ * @param {*} request 
+ * @param {*} response 
+ * @returns {object}
+ */
 
  async function getUsers(request, response){
    let userQuery = await User.get();

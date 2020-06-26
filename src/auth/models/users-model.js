@@ -13,7 +13,14 @@ const Model = require('./mongo-interface.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// let SECRET = 'secretvalidationstring';
+const roles = {
+  user: ['read'],
+  writer: ['read', 'create'],
+  editor: ['read', 'create', 'update'],
+  admin: ['read', 'create', 'update', 'delete']
+}
+
+
 let SECRET = process.env.SECRET;
 let EXPIRES = process.env.TOKEN_EXPIRATION;
 
@@ -60,6 +67,22 @@ class User extends Model {
       return false;
     }
   }
+
+  // async makeUser(data){
+  //   let newUser = new this.schema(data);
+  //   return newUser;
+  // }
+
+  async verifyPermissions(capability, user){
+    if (roles[user.role].includes(capability)){
+      console.log('returning true');
+      return true;
+    }
+    console.log('returning false');
+    return false;
+    
+  }
+
 
 }
 
